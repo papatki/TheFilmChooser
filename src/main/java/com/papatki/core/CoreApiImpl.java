@@ -1,9 +1,9 @@
 package com.papatki.core;
 
 import com.papatki.api.CoreApi;
-import com.papatki.item.FilmwebUser;
 import info.talacha.filmweb.api.FilmwebApi;
 import info.talacha.filmweb.connection.FilmwebException;
+import info.talacha.filmweb.models.Film;
 import info.talacha.filmweb.models.User;
 import info.talacha.filmweb.models.WatchlistItem;
 
@@ -14,15 +14,17 @@ public class CoreApiImpl implements CoreApi {
 
     @Override
     public void exit() {
+        System.exit(0);
 
     }
 
     @Override
-    public User loginToFilmweb(FilmwebApi fa, String login, String password) throws FilmwebException {
-        User user = fa.login(login, password);
-        return user;
+    public void printUserWatchList(FilmwebApi fa, User user, List<WatchlistItem> watchlistItems) throws FilmwebException {
+        for (WatchlistItem item : watchlistItems) {
+            Film film = fa.getFilmData(item.getItemId());
+            System.out.println("~ " + film.getTitle());
+        }
     }
-
 
     @Override
     public List<WatchlistItem> getUserWatchList(FilmwebApi fa, User user) throws FilmwebException {
@@ -35,5 +37,12 @@ public class CoreApiImpl implements CoreApi {
         Random random = new Random();
         WatchlistItem randomItem = watchlistItem.get(random.nextInt(watchlistItem.size()));
         return randomItem;
+    }
+
+    @Override
+    public void printChosenMovie(FilmwebApi fa, WatchlistItem watchlistItem) throws FilmwebException {
+        Film film = fa.getFilmData(watchlistItem.getItemId());
+        System.out.println("~ " + film.getTitle() + "\n"+ film.getDuration()
+                            +"\n"+ film.getGenre() + "\n" + film.getPlot());
     }
 }

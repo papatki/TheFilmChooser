@@ -11,8 +11,9 @@ import java.util.List;
 public interface CoreApi {
 
     void exit();
-    User loginToFilmweb(FilmwebApi fa, String login, String password) throws FilmwebException;
+    void printUserWatchList(FilmwebApi fa, User user, List<WatchlistItem> watchlistItems) throws FilmwebException;
     List<WatchlistItem> getUserWatchList(FilmwebApi fa, User user) throws FilmwebException;
     WatchlistItem chooseRandomMovie(List<WatchlistItem> watchlistItem);
+    void printChosenMovie(FilmwebApi fa, WatchlistItem watchlistItem) throws FilmwebException;
 
 }
