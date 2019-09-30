@@ -28,7 +28,7 @@ public class CoreApiImpl implements CoreApi {
 
     @Override
     public List<WatchlistItem> getUserWatchList(FilmwebApi fa, User user) throws FilmwebException {
-        List<WatchlistItem> watchlistItem = fa.getUserWatchlist(user.getId(),0,100);
+        List<WatchlistItem> watchlistItem = fa.getUserWatchlist(user.getId(), 0, 100);
         return watchlistItem;
     }
 
@@ -42,7 +42,7 @@ public class CoreApiImpl implements CoreApi {
     @Override
     public void printChosenMovie(FilmwebApi fa, WatchlistItem watchlistItem) throws FilmwebException {
         Film film = fa.getFilmData(watchlistItem.getItemId());
-        System.out.println("~ " + film.getPolishTitle() + "\n"+ film.getDuration()
-                            +"\n"+ film.getGenre() + "\n" + film.getPlot());
+        System.out.println(" " + film.getPolishTitle() + "\n Duration: " + film.getDuration()
+                + "\n Genre: " + film.getGenre() + "\n Description: " + film.getPlot());
     }
 }
