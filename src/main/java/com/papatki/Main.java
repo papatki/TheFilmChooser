@@ -11,11 +11,10 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws FilmwebException {
+    public static void main(String[] args){
 
         CoreApiImpl coreApi = new CoreApiImpl();
         ConsoleUiImpl consoleUi = new ConsoleUiImpl();
-
         FilmwebApi filmwebApi = new FilmwebApi();
 
 
@@ -30,29 +29,33 @@ public class Main {
             String passwordInput = consoleUi.getInput();
 
             //login to user's filmweb account
-            User user = filmwebApi.login(loginInput, passwordInput);
-            consoleUi.printMessage("Dear " + user.getUsername() + "! Welcome in The Movie Chooser");
-            consoleUi.printMessage("Your Want to watch movie list:");
+            try {
+                User user = filmwebApi.login(loginInput, passwordInput);
+                consoleUi.printMessage("Dear " + user.getUsername() + "! Welcome in The Movie Chooser");
+                consoleUi.printMessage("Your Want to watch movie list:");
 
-            //get user's list of movies
-            List<WatchlistItem> watchList = coreApi.getUserWatchList(filmwebApi,user);
+                //get user's list of movies
+                List<WatchlistItem> watchList = coreApi.getUserWatchList(filmwebApi, user);
 
-            //print the list
-            coreApi.printUserWatchList(filmwebApi,user,watchList);
+                //print the list
+                coreApi.printUserWatchList(filmwebApi, user, watchList);
 
-            consoleUi.printMessage("Press 1 to pick random movie to watch from your list");
+                consoleUi.printMessage("Press 1 to pick random movie from your list");
 
-            int choice = Integer.parseInt(consoleUi.getInput());
-            if (choice == 1) {
-                //pick a random movie from the list
-                WatchlistItem movieToWatch = coreApi.chooseRandomMovie(watchList);
-                System.out.println("Your chosen movie is: ");
-                coreApi.printChosenMovie(filmwebApi,movieToWatch);
-                coreApi.exit();
+                int choice = Integer.parseInt(consoleUi.getInput());
+                if (choice == 1) {
+                    //pick a random movie from the list
+                    WatchlistItem movieToWatch = coreApi.chooseRandomMovie(watchList);
+                    System.out.println("Your chosen movie is: ");
+                    coreApi.printChosenMovie(filmwebApi, movieToWatch);
+                    coreApi.exit();
+                } else {
+                    consoleUi.printMessage("Invalid input.");
+                    isRunning = false;
+                }
+            } catch (FilmwebException e) {
+                consoleUi.printMessage("Something went wrong. Try again.");
             }
-
-
         }
     }
-
 }
