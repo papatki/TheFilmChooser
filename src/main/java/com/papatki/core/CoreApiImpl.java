@@ -22,7 +22,7 @@ public class CoreApiImpl implements CoreApi {
     public void printUserWatchList(FilmwebApi fa, User user, List<WatchlistItem> watchlistItems) throws FilmwebException {
         for (WatchlistItem item : watchlistItems) {
             Film film = fa.getFilmData(item.getItemId());
-            System.out.println("~ " + film.getTitle());
+            System.out.println("~ " + film.getPolishTitle());
         }
     }
 
@@ -42,7 +42,7 @@ public class CoreApiImpl implements CoreApi {
     @Override
     public void printChosenMovie(FilmwebApi fa, WatchlistItem watchlistItem) throws FilmwebException {
         Film film = fa.getFilmData(watchlistItem.getItemId());
-        System.out.println("~ " + film.getTitle() + "\n"+ film.getDuration()
+        System.out.println("~ " + film.getPolishTitle() + "\n"+ film.getDuration()
                             +"\n"+ film.getGenre() + "\n" + film.getPlot());
     }
 }
